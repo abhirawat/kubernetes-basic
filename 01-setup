@@ -1,3 +1,4 @@
 # working on mac now instead of raspberry pi
 
 setup using details on https://kubernetes.io/docs/tasks/tools/install-minikube/
+minikube addons enable ingress
