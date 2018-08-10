@@ -32,3 +32,10 @@ spec:
         image: nginx:1.8
         ports:
         - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "10m"
+          limits:
+            memory: "512Mi"
+            cpu: "20m"
