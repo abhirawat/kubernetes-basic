@@ -2,8 +2,17 @@ import redis
 from socketserver import ForkingMixIn
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import threading
+import sys
 
 allowedCalls = ["get", "set"]
+if len(sys.argv) == 3:
+    redis_ip = sys.argv[1]
+    redis_port = sys.argv[2]
+else:
+    print("Usage: app.py redis_ip redis_port")
+    sys.exit(1)
+
+redisConn = redis.StrictRedis(host=redis_ip, port=redis_port, db=0)
 
 def example():
     retString = "http://ip:port/set/foo/10"
@@ -19,17 +28,28 @@ class Handler(BaseHTTPRequestHandler):
             self.end_headers()
             return
         pathParts = self.path.split('/')[1:]
-        if len(pathParts) < 2 or pathParts[0] not in allowedCalls:
-            self.send_response(401)
+        if pathParts[0] not in allowedCalls or (pathParts[0] == "get" and len(pathParts) < 2) or (pathParts[0] == "set" and len(pathParts) < 3):
+            self.send_response(400)
             self.end_headers()
             message = "Allowed calls are:\n{}\n".format(example())
             encodedMessage = message.encode('utf-8')
             self.wfile.write(encodedMessage)
             return
         else:
+            message = "Served from host: {}\n".format(self.connection.getsockname())
+            command = pathParts[0]
+            key = pathParts[1]
+            if command == "set":
+                value = pathParts[2]
+                redisConn.set(key,value)
+                message = message + "Done" + "\n"
+            if command == "get":
+                value = redisConn.get(key)
+                if value == None:
+                    value = "None"
+                message = message + value.decode('utf-8') + "\n"
             self.send_response(200)
             self.end_headers()
-            message = "Served from host: {}\n".format(self.connection.getsockname())
             encodedMessage = message.encode('utf-8')
             self.wfile.write(encodedMessage)
             return
