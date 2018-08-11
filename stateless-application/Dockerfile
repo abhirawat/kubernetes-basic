@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD [ "python", "./app.py" ]
+CMD [ "python", "./app.py", "192.168.99.100", "6379"]
