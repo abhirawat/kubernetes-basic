@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: redis-lb
+spec:
+  rules:
+    - port: 6379
+      tcp:
+        backend:
+          serviceName: redis
+          servicePort: 6379

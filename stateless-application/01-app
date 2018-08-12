@@ -1,0 +1,41 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: stateless
+spec:
+  selector:
+    app: custom
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 80
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom
+spec:
+  selector:
+    matchLabels:
+      app: custom
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: custom
+    spec:
+      subdomain: stateless
+      containers:
+      - name: custom
+        image: rawat/stateless-application:1.0
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "10m"
+          limits:
+            memory: "512Mi"
+            cpu: "20m"

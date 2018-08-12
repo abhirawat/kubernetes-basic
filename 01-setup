@@ -1,4 +1,9 @@
-# working on mac now instead of raspberry pi
+#!/bin/bash
 
-setup using details on https://kubernetes.io/docs/tasks/tools/install-minikube/
+brew cask install virtualbox
+brew install kubernetes-cli
+brew cask install minikube
+minikube start
+kubectl apply -f ingress-nginx-controller.yaml
 minikube addons enable ingress
+minikube addons enable metrics-server
