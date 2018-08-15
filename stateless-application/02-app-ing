@@ -3,6 +3,11 @@ kind: Ingress
 metadata:
   name: stateless-lb
 spec:
-  backend:
-    serviceName: stateless
-    servicePort: 80
+  rules:
+  - host: "interview.travix.com"
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: stateless
+          servicePort: 80
