@@ -1,1 +1,14 @@
-kubectl autoscale deployment custom --max=5 --min=1 --cpu-percent=80
+#kubectl autoscale deployment custom --max=5 --min=1 --cpu-percent=60
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: stateless-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: custom
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
