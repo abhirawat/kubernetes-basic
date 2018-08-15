@@ -25,7 +25,7 @@ Added "interview.travix.com" entry in /etc/hosts to point to clusters external i
 ### Running Benchmarks using ab
 
 ```
-ab -c 100 -n 10000 http://192.168.99.100/get/foo
+ab -c 100 -n 10000 http://interview.travix.com/get/foo
 ```
 
 ### Useful Commands:
