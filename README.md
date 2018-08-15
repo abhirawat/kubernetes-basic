@@ -31,6 +31,7 @@ ab -c 100 -n 10000 http://192.168.99.100/get/foo
 ### Useful Commands:
 
 ```
+minikube ip
 kubectl cluster-info
 kubectl get services
 kubectl get deployments
