@@ -18,6 +18,7 @@ Supplying own config along with a persistent volume for data to stay across cont
 ```
 Application code and all config along with instructions present in directory stateless-application.
 Using custom docker container pushed to namespace rawat/ in dockerhub.
+Added "interview.travix.com" entry in /etc/hosts to point to clusters external ip.
 ```
 
 
